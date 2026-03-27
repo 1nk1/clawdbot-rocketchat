@@ -1,0 +1,42 @@
+{
+  "kind": "channel",
+  "id": "rocketchat",
+  "name": "RocketChat",
+  "description": "Connect OpenClaw/ClawdBot to RocketChat via webhook integration",
+  "version": "0.1.0",
+  "configSchema": {
+    "properties": {
+      "rocketchat": {
+        "type": "object",
+        "properties": {
+          "serverUrl": {
+            "type": "string",
+            "description": "RocketChat server URL, e.g. https://rocketchat.qantum.one"
+          },
+          "botUsername": {
+            "type": "string",
+            "description": "Bot user username in RocketChat"
+          },
+          "botAuthToken": {
+            "type": "string",
+            "description": "Bot user auth token (from RocketChat Personal Access Token)"
+          },
+          "botUserId": {
+            "type": "string",
+            "description": "Bot user ID in RocketChat"
+          },
+          "webhookSecret": {
+            "type": "string",
+            "description": "Secret token to validate incoming webhooks from RocketChat"
+          },
+          "allowFrom": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Allowed RocketChat usernames that can message the bot"
+          }
+        },
+        "required": ["serverUrl", "botUsername", "botAuthToken", "botUserId"]
+      }
+    }
+  }
+}
