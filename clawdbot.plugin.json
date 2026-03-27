@@ -1,6 +1,7 @@
 {
   "kind": "channel",
   "id": "rocketchat",
+  "channels": ["rocketchat"],
   "name": "RocketChat",
   "description": "Connect Clawdbot to RocketChat via webhook integration",
   "version": "0.1.0",

@@ -13,13 +13,11 @@
  */
 
 import {
-  defineChannelPluginEntry,
   createChatChannelPlugin,
   DEFAULT_ACCOUNT_ID,
 } from "openclaw/plugin-sdk/core";
 import { dispatchInboundDirectDmWithRuntime } from "openclaw/plugin-sdk/channel-inbound";
 import { readJsonWebhookBodyOrReject } from "openclaw/plugin-sdk/webhook-ingress";
-import type { PluginRuntime } from "openclaw/plugin-sdk/core";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { sendMessage, type RocketChatConfig } from "./rocketchat-api.js";
 
@@ -57,14 +55,15 @@ type ResolvedRcAccount = {
 
 // ── Runtime storage ──────────────────────────────────────────────────────────
 
-let _runtime: PluginRuntime | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _runtime: any = null;
 
 function getRcConfig(): RocketChatPluginConfig {
   const cfg = _runtime?.config.loadConfig() as
     | Record<string, unknown>
     | undefined;
   const channels = cfg?.["channels"] as Record<string, unknown> | undefined;
-  return (channels?.["openclaw-rocketchat"] as RocketChatPluginConfig) ?? {};
+  return (channels?.["rocketchat"] as RocketChatPluginConfig) ?? {};
 }
 
 // ── Channel plugin ───────────────────────────────────────────────────────────
@@ -105,7 +104,7 @@ const plugin = createChatChannelPlugin<ResolvedRcAccount>({
   // DM security: honour allowFrom list if configured
   security: {
     dm: {
-      channelKey: "openclaw-rocketchat",
+      channelKey: "rocketchat",
       resolvePolicy: (account: ResolvedRcAccount) =>
         account.allowFrom.length > 0 ? "allowlist" : "open",
       resolveAllowFrom: (account: ResolvedRcAccount) => account.allowFrom,
@@ -118,20 +117,23 @@ const plugin = createChatChannelPlugin<ResolvedRcAccount>({
 
 // ── Plugin entry ─────────────────────────────────────────────────────────────
 
-export default defineChannelPluginEntry({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default {
   id: "rocketchat",
   name: "RocketChat",
+  kind: "channel",
   description: "Connect Clawdbot to RocketChat via outgoing webhook",
-  plugin,
 
-  setRuntime: (rt) => {
-    _runtime = rt;
-  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register(api: any) {
+    _runtime = api.runtime;
 
-  registerFull: (api) => {
+    // Register the channel so clawdbot recognises "rocketchat" as a known channel id
+    api.registerChannel({ plugin });
+
+    // Register the inbound webhook route
     api.registerHttpRoute({
       path: "/webhook/rocketchat",
-      auth: "plugin",
       handler: async (req: IncomingMessage, res: ServerResponse) => {
         const rc = getRcConfig();
 
@@ -177,7 +179,7 @@ export default defineChannelPluginEntry({
         await dispatchInboundDirectDmWithRuntime({
           cfg,
           runtime: _runtime,
-          channel: "openclaw-rocketchat",
+          channel: "rocketchat",
           channelLabel: "RocketChat",
           accountId: DEFAULT_ACCOUNT_ID,
           peer: { kind: "direct", id: body.channel_id },
@@ -206,4 +208,4 @@ export default defineChannelPluginEntry({
       },
     });
   },
-});
+};
