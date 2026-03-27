@@ -1,0 +1,33 @@
+{
+  "name": "@qantum/openclaw-rocketchat",
+  "version": "0.1.0",
+  "description": "OpenClaw channel plugin for RocketChat",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "openclaw": {
+    "extensions": ["./dist/index.js"],
+    "channel": {
+      "id": "rocketchat",
+      "label": "RocketChat"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "tsc"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.0",
+    "openclaw": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
