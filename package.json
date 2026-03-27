@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "prepare": "tsc"
+    "prepare": "true"
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.0",
