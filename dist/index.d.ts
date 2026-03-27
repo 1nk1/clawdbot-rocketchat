@@ -1,15 +1,15 @@
 /**
- * OpenClaw RocketChat Channel Plugin
+ * Clawdbot RocketChat Channel Plugin
  *
  * Inbound:  RocketChat Outgoing Webhook → POST /webhook/rocketchat
- * Outbound: RocketChat REST API (chat.postMessage)
+ * Outbound: RocketChat Incoming Webhook URL (no auth tokens needed)
  *
  * Setup in RocketChat:
- *  1. Admin → Users → create bot user (role: bot), get auth token + userId
- *  2. Admin → Integrations → Outgoing Webhook:
- *       Event: Message Sent
- *       URLs: https://<openclaw-host>/webhook/rocketchat
+ *  1. Admin → Integrations → New Outgoing Webhook
+ *       Event: Message Sent, URLs: https://<host>/webhook/rocketchat
  *       Token: <webhookSecret from config>
+ *  2. Admin → Integrations → New Incoming Webhook
+ *       Copy the URL → set as channels.rocketchat.incomingWebhookUrl
  */
 declare const _default: {
     id: string;
