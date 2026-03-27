@@ -119,9 +119,9 @@ const plugin = createChatChannelPlugin<ResolvedRcAccount>({
 // ── Plugin entry ─────────────────────────────────────────────────────────────
 
 export default defineChannelPluginEntry({
-  id: "rocketchat",
+  id: "openclaw-rocketchat",
   name: "RocketChat",
-  description: "Connect OpenClaw to RocketChat via outgoing webhook",
+  description: "Connect Clawdbot to RocketChat via outgoing webhook",
   plugin,
 
   setRuntime: (rt) => {
