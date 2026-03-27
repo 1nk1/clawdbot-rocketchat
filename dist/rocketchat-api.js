@@ -3,6 +3,22 @@
  * Handles authentication and outbound message delivery.
  */
 export async function sendMessage(config, roomId, text, threadId) {
+    // Use Incoming Webhook if configured (no auth tokens needed)
+    if (config.incomingWebhookUrl) {
+        const body = { text, channel: roomId };
+        if (threadId)
+            body.tmid = threadId;
+        const res = await fetch(config.incomingWebhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+            const err = await res.text();
+            throw new Error(`RocketChat incoming webhook failed (${res.status}): ${err}`);
+        }
+        return { messageId: "", roomId, ts: Date.now() };
+    }
     const url = `${config.serverUrl}/api/v1/chat.postMessage`;
     const body = {
         roomId,

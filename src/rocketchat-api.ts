@@ -8,6 +8,7 @@ export interface RocketChatConfig {
   botUsername: string;
   botAuthToken: string;
   botUserId: string;
+  incomingWebhookUrl?: string;
   webhookSecret?: string;
   allowFrom?: string[];
 }
@@ -24,6 +25,22 @@ export async function sendMessage(
   text: string,
   threadId?: string,
 ): Promise<SendMessageResult> {
+  // Use Incoming Webhook if configured (no auth tokens needed)
+  if (config.incomingWebhookUrl) {
+    const body: Record<string, unknown> = { text, channel: roomId };
+    if (threadId) body.tmid = threadId;
+    const res = await fetch(config.incomingWebhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`RocketChat incoming webhook failed (${res.status}): ${err}`);
+    }
+    return { messageId: "", roomId, ts: Date.now() };
+  }
+
   const url = `${config.serverUrl}/api/v1/chat.postMessage`;
   const body: Record<string, unknown> = {
     roomId,

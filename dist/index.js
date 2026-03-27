@@ -110,6 +110,7 @@ export default {
                     botAuthToken: rc.botAuthToken ?? "",
                     botUserId: rc.botUserId ?? "",
                     botUsername: rc.botUsername ?? "",
+                    ...(rc.incomingWebhookUrl !== undefined && { incomingWebhookUrl: rc.incomingWebhookUrl }),
                     ...(rc.webhookSecret !== undefined && { webhookSecret: rc.webhookSecret }),
                     ...(rc.allowFrom !== undefined && { allowFrom: rc.allowFrom }),
                 };

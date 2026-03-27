@@ -7,6 +7,7 @@ export interface RocketChatConfig {
     botUsername: string;
     botAuthToken: string;
     botUserId: string;
+    incomingWebhookUrl?: string;
     webhookSecret?: string;
     allowFrom?: string[];
 }

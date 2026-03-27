@@ -26,6 +26,10 @@
             "type": "string",
             "description": "Bot user ID in RocketChat"
           },
+          "incomingWebhookUrl": {
+            "type": "string",
+            "description": "RocketChat Incoming Webhook URL for sending bot replies (alternative to botAuthToken/botUserId)"
+          },
           "webhookSecret": {
             "type": "string",
             "description": "Secret token to validate incoming webhooks from RocketChat"
