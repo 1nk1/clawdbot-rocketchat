@@ -64,7 +64,7 @@ function getRcConfig(): RocketChatPluginConfig {
     | Record<string, unknown>
     | undefined;
   const channels = cfg?.["channels"] as Record<string, unknown> | undefined;
-  return (channels?.["rocketchat"] as RocketChatPluginConfig) ?? {};
+  return (channels?.["openclaw-rocketchat"] as RocketChatPluginConfig) ?? {};
 }
 
 // ── Channel plugin ───────────────────────────────────────────────────────────
@@ -105,7 +105,7 @@ const plugin = createChatChannelPlugin<ResolvedRcAccount>({
   // DM security: honour allowFrom list if configured
   security: {
     dm: {
-      channelKey: "rocketchat",
+      channelKey: "openclaw-rocketchat",
       resolvePolicy: (account: ResolvedRcAccount) =>
         account.allowFrom.length > 0 ? "allowlist" : "open",
       resolveAllowFrom: (account: ResolvedRcAccount) => account.allowFrom,
@@ -177,7 +177,7 @@ export default defineChannelPluginEntry({
         await dispatchInboundDirectDmWithRuntime({
           cfg,
           runtime: _runtime,
-          channel: "rocketchat",
+          channel: "openclaw-rocketchat",
           channelLabel: "RocketChat",
           accountId: DEFAULT_ACCOUNT_ID,
           peer: { kind: "direct", id: body.channel_id },
