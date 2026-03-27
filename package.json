@@ -1,6 +1,6 @@
 {
   "name": "rocketchat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Clawdbot channel plugin for RocketChat",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,7 +11,9 @@
     "node": ">=22.14.0"
   },
   "clawdbot": {
-    "extensions": ["./dist/index.js"],
+    "extensions": [
+      "./dist/index.js"
+    ],
     "channel": {
       "id": "rocketchat",
       "label": "RocketChat"
@@ -24,6 +26,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.0",
+    "clawdbot": "^2026.1.24-3",
     "openclaw": "latest"
   },
   "devDependencies": {
