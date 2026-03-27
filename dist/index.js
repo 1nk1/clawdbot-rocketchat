@@ -68,7 +68,7 @@ const plugin = createChatChannelPlugin({
 });
 // ── Plugin entry ─────────────────────────────────────────────────────────────
 export default defineChannelPluginEntry({
-    id: "openclaw-rocketchat",
+    id: "rocketchat",
     name: "RocketChat",
     description: "Connect Clawdbot to RocketChat via outgoing webhook",
     plugin,

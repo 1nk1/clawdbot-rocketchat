@@ -1,7 +1,7 @@
 {
-  "name": "@qantum/openclaw-rocketchat",
+  "name": "rocketchat",
   "version": "0.1.0",
-  "description": "OpenClaw channel plugin for RocketChat",
+  "description": "Clawdbot channel plugin for RocketChat",
   "type": "module",
   "main": "./dist/index.js",
   "exports": {

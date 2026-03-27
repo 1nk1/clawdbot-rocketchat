@@ -1,6 +1,6 @@
 {
   "kind": "channel",
-  "id": "openclaw-rocketchat",
+  "id": "rocketchat",
   "name": "RocketChat",
   "description": "Connect Clawdbot to RocketChat via webhook integration",
   "version": "0.1.0",
